@@ -11,6 +11,8 @@
    * [PMS]()
    * [IMS]()
 * [JVM]()
+   * [ClassLoader]()
+   * [Dex]()
 * [国际化]()
 * [Hybird]()
 * [跨平台]()
