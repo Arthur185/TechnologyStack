@@ -5,11 +5,15 @@
 * [事件分发]()
 * [Gradle语法 task]()
 * [路由&总线]()
-* [四大MS]()
+* 四大MS
    * [AMS]()
    * [WMS]()
    * [PMS]()
    * [IMS]()
+* 三化
+   * [插件化]()
+   * [组件化]()
+   * [模块化](https://github.com/AirrWang/TechnologyStack/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96.md)
 * [JVM]()
    * [ClassLoader]()
    * [Dex]()
