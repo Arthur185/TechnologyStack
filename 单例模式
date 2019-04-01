@@ -1,0 +1,159 @@
+###1.单例模式介绍
+单例模式是应用最广的模式，也是我最先知道的一种设计模式，在深入了解单例模式之前，每当遇到如getInstance（）这样的创建实例的代码时，我都会把它当做一种单例模式的实现。
+在应用这个模式时，单例对象的类必须保证只有一个实例存在。很多时候系统只需要一个全局对象来协调系统整体的行为，比如在应用中只有一个ImageLoader实例，因为它含有线程池、缓存系统、网络请求等。
+**像这种不能自由构造对象的情形就是单例模式的使用场景。**
+###2.单例模式定义
+保证一个类仅有一个实例，并且自行实例化向整个系统提供这个实例
+###3.单例模式使用场景
+确保某个类有且只有一个对象的场景，避免产生多个对象消耗过多的资源，或者某种类型的对象有且只有一个。
+例如：创建一个对象需要消耗的资源过多（访问IO和数据库等）
+###4.单例模式实现关键点
+* 构造函数不对外开放，一般为Private
+* 通过一个静态方法或者枚举返回单例类对象
+* 确保单例类的对象有且只有一个，尤其是在多线程环境下
+* 确保单例类对象在反序列化时不会重新构建对象
+
+通过将单例类的构造函数私有化，使得客户端代码不能通过new的形式手动构造单例类的对象。单例类会暴露一个公有静态方法，客户端需要调用这个静态方法获取到单例类的唯一对象，在获取这个单例对象的过程中需要确保线程安全，即在多线程环境下构造单例类的对象也是有且只有一个，这也是单例模式实现中的难点。
+###5.实现方式
+#####5.1懒汉式
+* 懒汉式代码
+```
+public class Singleton { 
+
+    private static Singleton sInstance ; 
+    private Singleton (){}；
+
+    public static synchronized Singleton getInstance() { 
+        if (instance == null) { 
+            sInstance = new Singleton(); 
+        } 
+        return sInstance ; 
+    } 
+} 
+```
+* 代码分析
+getInstance（）方法中添加了synchronized 关键字，也就是getInstance是一个同步方法，这是为了保证在多线程情况下单例对象唯一性的手段。
+* 优缺点
+  * 优点：只有在使用时才会被实例化，节约了资源，保证了线程安全
+  * 缺点：第一次加载时需要及时实例化，反应慢，每次调用getInstance（）都进行同步，造成了不必要的同步开销。
+* 总结
+一般不建议使用
+#####5.2饿汉式
+* 饿汉式代码
+```
+public class Singleton { 
+    //static修饰的静态变量在内存中一旦创建，便永久存在
+    private static Singleton sInstance = new Singleton(); 
+    private Singleton (){} 
+    public static Singleton getInstance() { 
+        return sInstance ; 
+    } 
+}
+```
+* 代码分析
+饿汉式在类创建的同时就已经创建好一个静态的实例供系统使用，以后不再改变，所以天生是线程安全的
+也可使用静态代码块：
+```
+static { 
+    sInstance = new Singleton(); 
+}
+```
+#####5.3 Double Check Lock(DCL)双重校验模式
+* DCL代码
+```
+public class Singleton {
+    private static Singleton sInstance = null;  
+    private Singleton (){}  
+    public static Singleton getInstance() {
+        if (sInstance == null) {  //第一层校验
+            synchronized (Singleton.class) {
+                if (sInstance == null) {  //第二层校验
+                    sInstance = new Singleton();
+                }
+            }
+        }
+        return sInstance ;
+    }
+}
+```
+* 代码分析
+这种模式的亮点在于getInstance（）方法上，其中对sInstance 进行了两次判空：第一层判断是为了避免不必要的同步，第二层的判断是为了在null的情况下才创建实例
+* 模拟调试
+假设线程A执行到了sInstance = new Singleton(); 语句，这里看起来是一句代码，但是它并不是一个原子操作，这句代码最终会被编译成多条汇编指令，它大致会做三件事情：
+   * （1）给Singleton的实例分配内存
+   * （2）调用Singleton（）的构造函数，初始化成员字段
+   * （3）将singleton对象指向分配的内存空间（此时sInstance 不为null了）
+
+但是由于Java编译器允许处理器乱序执行，以及在jdk1.5之前，JMM（Java Memory Model：java内存模型）中Cache、寄存器、到主内存的回写顺序规定，上面的步骤2 步骤3的执行顺序是不保证了。也就是说执行顺序可能是1-2-3，也可能是1-3-2,如果是后者的指向顺序，并且恰恰在3执行完毕，2尚未执行时，被切换到线程B中，这时候因为sInstance 在线程A中执行了步骤3了，已经非空了，所以，线程B直接就取走了sInstance ，再使用时就会出错。这就是DCL失效问题。这种难以跟踪难以重现的错误可能会隐藏很久。
+但是在JDK1.5之后，官方给出了volatile关键字，将sInstance 定义的代码改成：
+```
+private volatile static Singleton sInstance ; //使用volatile 关键字
+```
+* 优缺点
+   * 优点：资源利用率高，第一次执行时才会实例化，效率高
+   * 缺点：第一次加载反应稍慢，不同平台编译过程中可能会存在安全隐患
+* 总结
+DCL是目前使用最多的单例实现方式，能够在需要时才实例化并且绝大多数场景下能保证对象的唯一性，但是不要在并发场景比较复杂或者低于JDK6版本下使用！
+#####5.4 静态内部类单例模式
+* 静态内部类单例代码
+```
+public class Singleton {
+    private Singleton (){} ;
+    public static final Singleton getInstance() {
+        return SingletonHolder.sInstance ;
+    }
+    /**
+    * 静态内部类
+    */
+    private static class SingletonHolder {
+        private static final Singleton sInstance = new Singleton();  
+    }
+}
+```
+* 代码分析
+第一次加载Singleton 类的时候并不会初始化sInstance ，只有第一次调用Singleton 的getInstance（）方法时才会导致sInstance 被初始化。因此，第一次调用getInstance（）方法会导致虚拟机加载SingletonHolder 类，这种方式不仅能够确保单例对象的唯一性，同时也延迟了单例的实例化。
+* 总结
+推荐使用的单例模式
+#####5.5 枚举单例
+* 枚举单例代码
+```
+public enum Singleton {  //enum枚举类
+    INSTANCE; 
+    public void whateverMethod() { 
+          // TODO sth
+    } 
+}
+```
+* 代码分析
+枚举单例模式最大的优点是写法简单，枚举在java中与普通的类是一样的，不仅能够有字段，还能够有自己的方法，最重要的是默认枚举实例是线程安全的，并且在任何情况下它都是一个单例。
+* 备注
+在上述几种单例模式中，有一个特殊情况会重新创建对象——反序列化（枚举单例不会）
+通过序列化可以将一个单例的实例对象写到磁盘，然后在读回来获得一个实例。即使构造函数是私有的，反序列化也可以通过特殊的途径创建实例，相当于调用该类的构造函数。
+反序列化操作提供了一个钩子函数使开发人员可以控制对象的反序列化——readResolve()，其他几种方式，必须加入如下方法才能保证反序列化时不会生成新的对象。
+```
+private Object readResolve()  throws ObjectStreamException{
+    return sInstance ;
+}
+```
+#####5.6 使用容器实现单例模式
+* 代码
+```
+public class SingletonManager {
+　　private static Map<String, Object> objMap = new HashMap<String,Object>();
+    private Singleton() {}
+　　public static void registerService(String key, Object instance) {
+　　　　if (!objMap.containsKey(key) ) {
+　　　　　　objMap.put(key, instance) ;//第一次是存入Map
+　　　　}
+　　}
+　　public static ObjectgetService(String key) {
+　　　　return objMap.get(key) ;//返回与key相对应的对象
+　　}
+}
+```
+* 代码分析
+在程序开始将多种单例类型注入到一个统一的管理类中，在使用时根据key获取对象对应类型的对象。
+这种方式使开发者可以管理多种类型的单例，并且在使用时可以通过统一的接口进行操作，降低使用成本，隐藏了具体实现，降低耦合。
+###6.单例模式总结
+不管以哪种形式实现单例模式，它们的核心原理是将构造函数私有化，并且通过静态公有方法获取一个唯一的实例，在这个获取的过程中必须保证线程的安全，同时也要防止反序列化导致重新生成实例对象。
+选择哪种实现方式取决于项目本身，是否是复杂的并发环境、JDK版本是否过低、单例对象的资源消耗等。
