@@ -9,7 +9,7 @@ Builder模式是一步一步创建一个复杂对象的创建型模式，可以�
 * d.初始化对象特别复杂，参数众多，且很多参数都具有默认值
 ### 4.Builder模式UML类图
 
-![Builder模式UML类图（摘自网络）](https://upload-images.jianshu.io/upload_images/6318561-9197aad5c39ac42f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+! [ Builder模式UML类图（摘自网络）](https://upload-images.jianshu.io/upload_images/6318561-9197aad5c39ac42f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 类图解析：
 * Product : 产品抽象类
