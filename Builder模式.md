@@ -7,7 +7,7 @@ Builder模式是一步一步创建一个复杂对象的创建型模式，可以�
 * b.多个部件和零件都可以装配到一个对象中，但产生的运行结果不相同
 * c.产品类非常复杂，产品类中的调用顺序不同产生了不同的作用
 * d.初始化对象特别复杂，参数众多，且很多参数都具有默认值
-### 3.Builder模式UML类图
+### 4.Builder模式UML类图
 
 ![Builder模式UML类图（摘自网络）](https://upload-images.jianshu.io/upload_images/6318561-9197aad5c39ac42f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -16,10 +16,10 @@ Builder模式是一步一步创建一个复杂对象的创建型模式，可以�
 * Builder : 抽象Builder类，规范产品组建，一般是由子类实现具体的组建过程
 * ConcreteBuilder : 具体的Builder类（实现Builder类）
 * Director : 统一组装过程
-### 4.实例解析
-##### 4.1实例背景
+### 5.实例解析
+##### 5.1实例背景
 组装计算机，过程简化为：构建主机、设置操作系统、设置显示器。
-##### 4.2构建计算机类，即Product角色
+##### 5.2构建计算机类，即Product角色
 ```
 //计算机抽象类
 public abstract class Computer{
@@ -57,7 +57,7 @@ public class Macbook extends Computer {
     }
 }
 ```
-##### 4.3构建抽象Builder类
+##### 5.3构建抽象Builder类
 ```
 public abstract class Builder {
     //设置主机
@@ -70,7 +70,7 @@ public abstract class Builder {
     public abstract Computer create();
 }
 ```
-##### 4.3构建具体的Builder类
+##### 5.4构建具体的Builder类
 ```
 public class MacbookBuilder extends Builder{
 
@@ -94,7 +94,7 @@ public class MacbookBuilder extends Builder{
     }
 }
 ```
-##### 4.3构建Director类 构造Computer
+##### 5.5构建Director类 构造Computer
 ```
 public class Director {
     Builder mBuilder =null;
@@ -110,7 +110,7 @@ public class Director {
     }
 }
 ```
-##### 4.4测试
+##### 5.6测试
 ```
 public class Test {
     public static void main (String[] args) {
@@ -127,14 +127,14 @@ public class Test {
 ```
 Computer Info :Computer [mBoard=英特尔主板, mDisplay=Dell显示器, mOs=Mac OS X 10]
 ```
-### 5.Builder模式精简
+### 6.Builder模式精简
 现实开发中，Director角色经常会被省略而直接用一个Builder来进行对象的组装，这个Builder通常为链式调用，关键点是每个set方法都返回自身，也就是return this,代码大致如下
 ```
   new TsetBuilder().setA("A").set("B").create();
 ```
 通过这种形式不进去除了Director角色，整个结构也更加简单，也可以对Product对象的组装过程更加精细控制。
 **建议查看Android源码AlertDialog实现，AlertDialog.Builder同时扮演了Builder、ConcreteBuilder、Director的角色，简化了Builder模式的设计！**
-### 5.Builder模式总结
+### 7.Builder模式总结
 * 优点
    * （1）良好的封装性，使用建造者模式可以使调用者不必知道产品内部的组成的细节
   * （2）建造者独立，容易扩展
