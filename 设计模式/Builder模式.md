@@ -139,4 +139,4 @@ Computer Info :Computer [mBoard=英特尔主板, mDisplay=Dell显示器, mOs=Mac
    * （1）良好的封装性，使用建造者模式可以使调用者不必知道产品内部的组成的细节
   * （2）建造者独立，容易扩展
 * 缺点
-会产生多余的Builder对象以及Director对象，消耗内存。
+会产生多余的Builder对象以及Director对象，消耗内存
