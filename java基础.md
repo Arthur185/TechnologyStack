@@ -1,1 +1,2 @@
 - [01.Java基本类型作为局部变量和成员变量时的存储方式有何不同](https://www.jianshu.com/p/4103870f605c)
+- [02.switch深入](https://www.jianshu.com/p/4103870f605c)
