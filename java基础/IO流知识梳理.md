@@ -106,10 +106,10 @@
 
 #### 11.2 按操作方式分类结构图
 - 关于IO流总结如下图所示
-- ![image](https://upload-images.jianshu.io/upload_images/4432347-ddbc1b96f5ccb688.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+  ![image](https://upload-images.jianshu.io/upload_images/4432347-ddbc1b96f5ccb688.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### 11.3 按操作对象分类结构图
 - 关于IO流总结如下图所示
-- ![image](https://upload-images.jianshu.io/upload_images/4432347-1ce768b945041ce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+  ![image](https://upload-images.jianshu.io/upload_images/4432347-1ce768b945041ce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
