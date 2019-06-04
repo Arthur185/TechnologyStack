@@ -1,3 +1,3 @@
 - [01.Java基本类型作为局部变量和成员变量时的存储方式有何不同](https://www.jianshu.com/p/4103870f605c)
 - [02.switch深入](https://github.com/AirrWang/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/Switch%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3.md)
-- [03.IO流知识梳理](https://github.com/AirrWang/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/Switch%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3.md)
+- [03.IO流知识梳理](https://github.com/AirrWang/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/IO%E6%B5%81%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86.md)
