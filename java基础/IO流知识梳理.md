@@ -97,3 +97,19 @@
 - 编码:把看得懂的变成看不懂的:	String -- byte[]
 - 解码:把看不懂的变成看得懂的:	byte[] -- String
 
+### 11.IO流体系图
+#### 11.1 按照流向进行划分
+- 根据流的流向以及操作的数据单元不同，将流分为了四种类型，每种类型对应一种抽象基类。
+    - 这四种抽象基类分别为：InputStream,Reader,OutputStream以及Writer。四种基类下，对应不同的实现类，具有不同的特性。在这些实现类中，又可以分为节点流和处理流。下面就是整个由着四大基类支撑下，整个IO流的框架图。  
+    - ![](http://upload-images.jianshu.io/upload_images/3985563-38c3ea4562d6dbe3.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240)  
+
+
+#### 11.2 按操作方式分类结构图
+- 关于IO流总结如下图所示
+- ![image](https://upload-images.jianshu.io/upload_images/4432347-ddbc1b96f5ccb688.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+#### 11.3 按操作对象分类结构图
+- 关于IO流总结如下图所示
+- ![image](https://upload-images.jianshu.io/upload_images/4432347-1ce768b945041ce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
