@@ -1,11 +1,11 @@
 ### 01.组件化
 Android中的组件化能对代码进行高度的解耦、模块分离等，能极大地提高开发效率。
 路由和组件化本身没有什么联系，因为路由的责任是负责页面跳转，但是组件化中两个单向依赖的module之间需要互相启动对方的Activity，
-因为没有相互引用，startActivity()是实现不了的，必须需要一个协定的通信方式，此时路由框架就派上用场了
+因为没有相互引用，startActivity()是实现不了的，必须需要一个协定的通信方式，此时路由框架就派上用场了.
 ### 02.Arouter基础原理
-- 传统的Activity之间通信，通过startActivity(intent)，而在组件化的项目中，上层的module没有依赖关系(即便两个module有依赖关系，也只能是单向的依赖)，那么假如login module中的一个Activity需要启动pay_module中的一个Activity便不能通过startActivity来进行跳转
-    - 隐式跳转，这当然也是一种解决方法，但是一个项目中不可能所有的跳转都是隐式的，这样Manifest文件会有很多过滤配置，而且非常不利于后期维护
-    - 用反射拿到Activity的class文件也可以实现跳转，但是第一：大量的使用反射跳转对性能会有影响，第二：你需要拿到Activity的类文件，在组件开发的时候，想拿到其他module的类文件是很麻烦的，因为组件开发的时候组件module之间是没有相互引用的，你只能通过找到类的路径去反射拿到这个class
+- 传统的Activity之间通信，通过startActivity(intent)，而在组件化的项目中，上层的module没有依赖关系(即便两个module有依赖关系，也只能是单向的依赖)，那么假如login module中的一个Activity需要启动pay_module中的一个Activity便不能通过startActivity来进行跳转.
+    - 隐式跳转，这当然也是一种解决方法，但是一个项目中不可能所有的跳转都是隐式的，这样Manifest文件会有很多过滤配置，而且非常不利于后期维护.
+    - 用反射拿到Activity的class文件也可以实现跳转，但是第一：大量的使用反射跳转对性能会有影响，第二：你需要拿到Activity的类文件，在组件开发的时候，想拿到其他module的类文件是很麻烦的，因为组件开发的时候组件module之间是没有相互引用的，你只能通过找到类的路径去反射拿到这个class.
 
     - 在base_module上层再依赖一个router_module,而这个router_module就是负责各个模块之间页面跳转的。
     - 在代码里加入的@Route注解，会在编译时期通过apt生成一些存储path和activityClass映射关系的类文件，然后app进程启动的时候会拿到这些类文件，把保存这些映射关系的数据读到内存里(保存在map里)，然后在进行路由跳转的时候，通过build()方法传入要到达页面的路由地址。
