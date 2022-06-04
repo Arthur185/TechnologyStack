@@ -4,3 +4,4 @@
 - [04.面向对象](https://github.com/Arthur185/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1.md)
 - [05.反射&注解](https://github.com/Arthur185/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/%E5%8F%8D%E5%B0%84%26%E6%B3%A8%E8%A7%A3.md)
 - [06.JVM内存&类加载](https://github.com/Arthur185/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/JVM%E5%86%85%E5%AD%98%26%E7%B1%BB%E5%8A%A0%E8%BD%BD.md)
+- [07.泛型](https://github.com/Arthur185/TechnologyStack/blob/master/java%E5%9F%BA%E7%A1%80/%E6%B3%9B%E5%9E%8B.md)
